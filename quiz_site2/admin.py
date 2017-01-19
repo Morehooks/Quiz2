@@ -1,6 +1,8 @@
 from django.forms import Textarea
 from django.db import models
 from django.contrib import admin
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 from .models import Section, Page, SubPage, Question, Response
 
 
@@ -39,7 +41,17 @@ class QuestionAdmin(admin.ModelAdmin):
     inlines = [ResponseInline]
 
 
-admin.site.register(Section)
+class SectionResource(resources.ModelResource):
+
+    class Meta:
+        model = Section
+
+
+class SectionIOAdmin(ImportExportModelAdmin):
+    resource_class = SectionResource
+
+
+admin.site.register(Section, SectionIOAdmin)
 admin.site.register(Page)
 admin.site.register(SubPage, SubPageAdmin)
 admin.site.register(Question, QuestionAdmin)
