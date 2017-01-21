@@ -12,7 +12,7 @@ class Section(models.Model):
 
 class Page(models.Model):
     initial_seq = 0
-    page_header = models.TextField(null=True, blank=True)
+    page_header = models.TextField(blank=True)
     section = models.ForeignKey('Section', on_delete=models.CASCADE)
     page_seq = models.IntegerField(default=100)
 
@@ -22,7 +22,7 @@ class Page(models.Model):
 
 class SubPage(models.Model):
     initial_seq = 0
-    sub_page_header = models.TextField(null=True, blank=True)
+    sub_page_header = models.TextField(blank=True)
     page = models.ForeignKey('Page', on_delete=models.CASCADE)
     sub_page_seq = models.IntegerField(default=100)
 
@@ -33,20 +33,33 @@ class SubPage(models.Model):
 class Question(models.Model):
     initial_seq = 0
     # initialise constants for Question types
-    SINGLE_QUESTION = 'SingleQuestion'
+    SINGLE_QUESTION_TABLE = 'SingleQuestionTable'
+    SINGLE_QUESTION_LIST = 'SingleQuestionList'
     MULTI_CHOICE_QUESTION = 'MultiChoiceQuestion'
     TEXT_QUESTION = 'TextQuestion'
 
-    question_seq = models.IntegerField(default=100)
-    question_text = models.CharField(max_length=255)
+    # initialise yes no constants
+    YES = 'Y'
+    NO = 'N'
 
     # tuple of question choices, will make a drop down box.
     QUESTION_TYPE_CHOICES = (
-        (SINGLE_QUESTION, 'Single Question'),
-        (MULTI_CHOICE_QUESTION, 'Multi-Choice Question'),
+        (SINGLE_QUESTION_TABLE, 'Single Question Table'),
+        (SINGLE_QUESTION_LIST, 'Single Question List'),
+        (MULTI_CHOICE_QUESTION, 'Multi Choice Question'),
         (TEXT_QUESTION, 'Text Question'),
     )
-    question_type = models.CharField(max_length=255, choices=QUESTION_TYPE_CHOICES, default=SINGLE_QUESTION)
+
+    SUB_QUESTION_CHOICES = (
+        (YES, 'Y'),
+        (NO, 'N'),
+    )
+
+    question_id = models.IntegerField()
+    question_seq = models.IntegerField(default=100)
+    question_text = models.CharField(max_length=255)
+    question_type = models.CharField(max_length=255, choices=QUESTION_TYPE_CHOICES, default=SINGLE_QUESTION_TABLE)
+    sub_question = models.CharField(max_length=1, choices=SUB_QUESTION_CHOICES, default=NO)
     sub_page = models.ForeignKey('SubPage', on_delete=models.CASCADE)
 
     def __str__(self):
@@ -55,9 +68,21 @@ class Question(models.Model):
 
 class Response(models.Model):
     initial_seq = 0
+
+    # initialise yes no constants
+    YES = 'Y'
+    NO = 'N'
+
+    RESPONSE_OPS_CHOICES = (
+        (YES, 'Y'),
+        (NO, 'N'),
+    )
+
     response_text = models.CharField(max_length=255)
     response_value = models.IntegerField()
     response_seq = models.IntegerField(default=100)
+    response_ops = models.CharField(max_length=1, choices=RESPONSE_OPS_CHOICES, default=NO)
+    response_columns = models.IntegerField()
     question = models.ForeignKey('Question', on_delete=models.CASCADE)
 
     def __str__(self):
