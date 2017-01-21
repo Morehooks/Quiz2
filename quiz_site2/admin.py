@@ -73,6 +73,18 @@ class SubPageResource(resources.ModelResource):
         model = SubPage
 
 
+class QuestionResource(resources.ModelResource):
+
+    class Meta:
+        model = Question
+
+
+class ResponseResource(resources.ModelResource):
+
+    class Meta:
+        model = Response
+
+
 """
 Below admin classes for import/export to use the Admin GUI.
 """

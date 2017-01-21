@@ -118,5 +118,3 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(os.getcwd(), 'Static')
-
-IMPORT_EXPORT_USE_TRANSACTIONS = True
