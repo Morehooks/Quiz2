@@ -91,7 +91,8 @@ class Response(models.Model):
 
 def default_seq_value(quiz_model):
     """
-    Sets a default question seq number
+    Sets a default question seq number, not in use.
+
     :return: integer
     """
     quiz_model_title = quiz_model.title()

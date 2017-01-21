@@ -7,10 +7,19 @@ from .models import Section, Page, SubPage, Question, Response
 
 
 def get_form_overrides():
+    """
+    I felt the widgets for text fields wee too small, so this class makes them bigger.
+    :return: Model fields
+    """
     return {
         models.CharField: {'widget': Textarea(attrs={'rows': 1, 'cols': 255})},
         models.TextField: {'widget': Textarea(attrs={'rows': 10, 'cols': 200})},
     }
+
+
+"""
+Below are classes to alter the admin GUI for models.
+"""
 
 
 class ResponseInline(admin.StackedInline):
@@ -41,16 +50,41 @@ class QuestionAdmin(admin.ModelAdmin):
     inlines = [ResponseInline]
 
 
+"""
+Below resources for importing/exporting data into models
+"""
+
+
 class SectionResource(resources.ModelResource):
 
     class Meta:
         model = Section
 
 
+class PageResource(resources.ModelResource):
+
+    class Meta:
+        model = Page
+
+
+class SubPageResource(resources.ModelResource):
+
+    class Meta:
+        model = SubPage
+
+
+"""
+Below admin classes for import/export to use the Admin GUI.
+"""
+
+
 class SectionIOAdmin(ImportExportModelAdmin):
     resource_class = SectionResource
 
 
+"""
+Registering classes for admin page
+"""
 admin.site.register(Section, SectionIOAdmin)
 admin.site.register(Page)
 admin.site.register(SubPage, SubPageAdmin)
