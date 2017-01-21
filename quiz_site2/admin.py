@@ -8,7 +8,7 @@ from .models import Section, Page, SubPage, Question, Response
 
 def get_form_overrides():
     """
-    I felt the widgets for text fields wee too small, so this class makes them bigger.
+    I felt the widgets for text fields were too small, so this class makes them bigger.
     :return: Model fields
     """
     return {
