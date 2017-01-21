@@ -1,20 +1,18 @@
-from django.forms import Textarea
-from django.db import models
 from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 from .models import Section, Page, SubPage, Question, Response
 
 
-def get_form_overrides():
-    """
-    I felt the widgets for text fields were too small, so this class makes them bigger.
-    :return: Model fields
-    """
-    return {
-        models.CharField: {'widget': Textarea(attrs={'rows': 1, 'cols': 255})},
-        models.TextField: {'widget': Textarea(attrs={'rows': 10, 'cols': 200})},
-    }
+# def get_form_overrides():
+    #"""
+   #I felt the widgets for text fields were too small, so this class makes them bigger.
+    #:return: Model fields
+    #"""
+    #return {
+   #     models.CharField: {'widget': Textarea(attrs={'rows': 1, 'cols': 255})},
+   #     models.TextField: {'widget': Textarea(attrs={'rows': 10, 'cols': 200})},
+    #}"""
 
 
 """
@@ -22,7 +20,7 @@ Below are classes to alter the admin GUI for models.
 """
 
 
-class ResponseInline(admin.StackedInline):
+"""class ResponseInline(admin.StackedInline):
     formfield_overrides = get_form_overrides()
     model = Response
     extra = 1
@@ -47,7 +45,7 @@ class QuestionAdmin(admin.ModelAdmin):
     fieldsets = [
         (None,               {'fields': ['question_text', 'question_seq', 'question_type', 'sub_page']}),
     ]
-    inlines = [ResponseInline]
+    inlines = [ResponseInline]"""
 
 
 """
@@ -94,11 +92,27 @@ class SectionIOAdmin(ImportExportModelAdmin):
     resource_class = SectionResource
 
 
+class PageIOAdmin(ImportExportModelAdmin):
+    resource_class = Page
+
+
+class SubPageIOAdmin(ImportExportModelAdmin):
+    resource_class = SubPage
+
+
+class QuestionIOAdmin(ImportExportModelAdmin):
+    resource_class = Question
+
+
+class ResponseIOAdmin(ImportExportModelAdmin):
+    resource_class = Response
+
+
 """
 Registering classes for admin page
 """
 admin.site.register(Section, SectionIOAdmin)
-admin.site.register(Page)
-admin.site.register(SubPage, SubPageAdmin)
-admin.site.register(Question, QuestionAdmin)
-admin.site.register(Response)
+admin.site.register(Page, PageIOAdmin)
+admin.site.register(SubPage, SubPageIOAdmin)
+admin.site.register(Question,  QuestionIOAdmin)
+admin.site.register(Response, ResponseIOAdmin)
