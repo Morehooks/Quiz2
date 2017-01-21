@@ -14,4 +14,14 @@ page_df = pd.merge(page_df, section_df, on='section_seq')
 page_df = page_df.drop('section_text', axis=1)
 page_df = page_df.rename(columns={'id': 'section', 'page_id': 'id'})
 page_df = page_df[['id', 'page_seq', 'page_header', 'section']]
-print(page_df)
+
+sub_page_df = survey_builder_df[['page_seq', 'sub_page_seq', 'sub_page_header']]
+sub_page_df = sub_page_df.drop_duplicates()
+sub_page_df['sub_page_id'] = np.arange(1, len(sub_page_df) + 1)
+sub_page_df = pd.merge(sub_page_df, page_df, on='page_seq')
+sub_page_df = sub_page_df.drop('page_header', axis=1)
+sub_page_df = sub_page_df.rename(columns={'id': 'page', 'sub_page_id': 'id'})
+sub_page_df = sub_page_df[['id', 'sub_page_seq', 'sub_page_header', 'page']]
+print(sub_page_df)
+
+
