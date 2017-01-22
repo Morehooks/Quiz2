@@ -1,52 +1,8 @@
 from django.contrib import admin
-from import_export import resources
-from import_export.admin import ImportExportModelAdmin
+from import_export import resources, fields
 from .models import Section, Page, SubPage, Question, Response
 from import_export.admin import ImportExportActionModelAdmin
-
-
-# def get_form_overrides():
-    #"""
-   #I felt the widgets for text fields were too small, so this class makes them bigger.
-    #:return: Model fields
-    #"""
-    #return {
-   #     models.CharField: {'widget': Textarea(attrs={'rows': 1, 'cols': 255})},
-   #     models.TextField: {'widget': Textarea(attrs={'rows': 10, 'cols': 200})},
-    #}"""
-
-
-"""
-Below are classes to alter the admin GUI for models.
-"""
-
-
-"""class ResponseInline(admin.StackedInline):
-    formfield_overrides = get_form_overrides()
-    model = Response
-    extra = 1
-
-
-class QuestionInline(admin.StackedInline):
-    formfield_overrides = get_form_overrides()
-    model = Question
-    extra = 1
-
-
-class SubPageAdmin(admin.ModelAdmin):
-    formfield_overrides = get_form_overrides()
-    fieldsets = [
-        (None, {'fields': ['sub_page_header', 'sub_page_seq', 'section', 'page']}),
-    ]
-    inlines = [QuestionInline]
-
-
-class QuestionAdmin(admin.ModelAdmin):
-    formfield_overrides = get_form_overrides()
-    fieldsets = [
-        (None,               {'fields': ['question_text', 'question_seq', 'question_type', 'sub_page']}),
-    ]
-    inlines = [ResponseInline]"""
+from import_export.widgets import ForeignKeyWidget
 
 
 """
@@ -61,24 +17,40 @@ class SectionResource(resources.ModelResource):
 
 
 class PageResource(resources.ModelResource):
+    section = fields.Field(
+        column_name='section',
+        attribute='section',
+        widget=ForeignKeyWidget(Section, 'id'))
 
     class Meta:
         model = Page
 
 
 class SubPageResource(resources.ModelResource):
+    page = fields.Field(
+        column_name='page',
+        attribute='page',
+        widget=ForeignKeyWidget(Page, 'id'))
 
     class Meta:
         model = SubPage
 
 
 class QuestionResource(resources.ModelResource):
+    sub_page = fields.Field(
+        column_name='sub_page',
+        attribute='sub_page',
+        widget=ForeignKeyWidget(SubPage, 'id'))
 
     class Meta:
         model = Question
 
 
 class ResponseResource(resources.ModelResource):
+    question = fields.Field(
+        column_name='question',
+        attribute='question',
+        widget=ForeignKeyWidget(Question, 'id'))
 
     class Meta:
         model = Response

@@ -36,7 +36,7 @@ question_df[['question_seq', 'sub_page_seq']] = question_df[['question_seq', 'su
 question_df['question_id'] = np.arange(1, len(question_df) + 1)
 question_df = pd.merge(question_df, sub_page_df, on='sub_page_seq')
 question_df = question_df.rename(columns={'id': 'sub_page', 'question_id': 'id'})
-question_df = question_df[['id', 'question_seq', 'question_text', 'question_type', 'sub_question', 'sub_page_seq']]
+question_df = question_df[['id', 'question_seq', 'question_text', 'question_type', 'sub_question', 'sub_page']]
 
 
 # response
