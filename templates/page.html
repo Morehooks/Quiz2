@@ -6,8 +6,23 @@
 </head>
 <body>
     {% for a_page in pages %}
-        {% block section %}{% endblock %}
-        {{ a_page.page_header }}
+        {{ a_page.section.section_text}}<br/>
+        {{ a_page.page_header }}<br/>
+        {% for sub_page in sub_pages %}
+            {% if sub_page.page.id == a_page.id %}
+                {{ sub_page.sub_page_header }}<br/>
+                {% for question in questions %}
+                     {% if question.sub_page.id == sub_page.id %}
+                         {{ question.question_text }}<br/>
+                         {% for response in responses %}
+                             {% if response.question.id == question.id %}
+                                 {{ response.response_text }}<br/>
+                             {% endif %}
+                         {% endfor %}
+                     {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
     {% endfor %}
     <div class="pagination">
         <span class="step-links">

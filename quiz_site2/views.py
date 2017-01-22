@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
-from .models import Page, Section
+from .models import Page, SubPage, Question, Response
 
 
 def index(request):
@@ -20,9 +20,9 @@ def index(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         pages = paginator.page(paginator.num_pages)
-    return render(request, 'page.html', {'pages': pages})
+    page_dict = {'pages': pages, 'sub_pages': SubPage.objects.all(),
+                 'questions': Question.objects.all(), 'responses': Response.objects.all()}
+    return render(request, 'page.html', page_dict)
 
 
-def section(request):
-    return render(request, 'section.html', {'sections': Section.objects.all()})
 
