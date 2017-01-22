@@ -1,6 +1,16 @@
 {% for question in questions %}
     {% if question.sub_page.id == sub_page.id %}
-        {{ question.question_text }}<br/>
-        {% include 'question.html'  %}
+        {% if question.question_type == 'Single Question Table' %}
+            {{ question.question_text }}<br/>
+            {% include 'question_single_table.html'  %}
+        {% elif question.question_type == 'Single Question List' %}
+            {{ question.question_text }}<br/>
+            {% include 'question_single_list.html'  %}
+        {% elif question.question_type == 'Multi Choice Question' %}
+            {% include 'question_multi.html'  %}
+        {% elif question.question_type == 'Text Question' %}
+            {{ question.question_text }}<br/>
+            {% include 'question_text.html'  %}
+        {% endif %}
     {% endif %}
 {% endfor %}

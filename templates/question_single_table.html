@@ -1,0 +1,5 @@
+{% for response in responses %}
+    {% if response.question.id == question.id %}
+        {{ response.response_text }}<br/>
+    {% endif %}
+{% endfor %}
