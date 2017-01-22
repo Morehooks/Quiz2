@@ -1,9 +1,12 @@
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
 from .models import Page, SubPage, Question, Response
 
 
-def index(request):
+@login_required
+def survey(request):
     """
     Adapted from: https://docs.djangoproject.com/en/1.10/topics/pagination/
     :param request:
@@ -23,6 +26,18 @@ def index(request):
     page_dict = {'pages': pages, 'sub_pages': SubPage.objects.all(),
                  'questions': Question.objects.all(), 'responses': Response.objects.all()}
     return render(request, 'page.html', page_dict)
+
+
+def login(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        return redirect('survey')
+    else:
+        return redirect('index')
+
+
 
 
 
