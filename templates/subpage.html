@@ -1,0 +1,6 @@
+{% for question in questions %}
+    {% if question.sub_page.id == sub_page.id %}
+        {{ question.question_text }}<br/>
+        {% include 'question.html'  %}
+    {% endif %}
+{% endfor %}

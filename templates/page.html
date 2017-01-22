@@ -11,16 +11,7 @@
         {% for sub_page in sub_pages %}
             {% if sub_page.page.id == a_page.id %}
                 {{ sub_page.sub_page_header }}<br/>
-                {% for question in questions %}
-                     {% if question.sub_page.id == sub_page.id %}
-                         {{ question.question_text }}<br/>
-                         {% for response in responses %}
-                             {% if response.question.id == question.id %}
-                                 {{ response.response_text }}<br/>
-                             {% endif %}
-                         {% endfor %}
-                     {% endif %}
-                {% endfor %}
+                {% include 'subpage.html' %}
             {% endif %}
         {% endfor %}
     {% endfor %}
