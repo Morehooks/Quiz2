@@ -2,6 +2,7 @@ from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 from .models import Section, Page, SubPage, Question, Response
+from import_export.admin import ImportExportActionModelAdmin
 
 
 # def get_form_overrides():
@@ -88,31 +89,31 @@ Below admin classes for import/export to use the Admin GUI.
 """
 
 
-class SectionIOAdmin(ImportExportModelAdmin):
-    resource_class = SectionResource
+class SectionIOAdmin(ImportExportActionModelAdmin):
+    pass
 
 
-class PageIOAdmin(ImportExportModelAdmin):
-    resource_class = Page
+class PageIOAdmin(ImportExportActionModelAdmin):
+    pass
 
 
-class SubPageIOAdmin(ImportExportModelAdmin):
-    resource_class = SubPage
+class SubPageIOAdmin(ImportExportActionModelAdmin):
+    pass
 
 
-class QuestionIOAdmin(ImportExportModelAdmin):
-    resource_class = Question
+class QuestionIOAdmin(ImportExportActionModelAdmin):
+    pass
 
 
-class ResponseIOAdmin(ImportExportModelAdmin):
-    resource_class = Response
+class ResponseIOAdmin(ImportExportActionModelAdmin):
+    pass
 
 
 """
 Registering classes for admin page
 """
-admin.site.register(Section, SectionIOAdmin)
 admin.site.register(Page, PageIOAdmin)
+admin.site.register(Section, SectionIOAdmin)
 admin.site.register(SubPage, SubPageIOAdmin)
 admin.site.register(Question,  QuestionIOAdmin)
 admin.site.register(Response, ResponseIOAdmin)

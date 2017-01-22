@@ -38,6 +38,7 @@ question_df = pd.merge(question_df, sub_page_df, on='sub_page_seq')
 question_df = question_df.rename(columns={'id': 'sub_page', 'question_id': 'id'})
 question_df = question_df[['id', 'question_seq', 'question_text', 'question_type', 'sub_question', 'sub_page_seq']]
 
+
 # response
 response_df = survey_builder_df[['response_seq', 'response_text', 'response_value', 'response_ops',
                                  'response_columns', 'question_seq']]
@@ -70,3 +71,5 @@ question_writer.save()
 response_writer = pd.ExcelWriter(os.path.join(os.getcwd(), 'response.xls'),  engine='xlwt')
 response_df.to_excel(response_writer, index=False, encoding='utf-8')
 response_writer.save()
+
+

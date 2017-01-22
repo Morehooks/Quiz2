@@ -51,8 +51,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'quiz_site2',
     'import_export',
+    'quiz_site2',
+
 )
 
 MIDDLEWARE_CLASSES = (

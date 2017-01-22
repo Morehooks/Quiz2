@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Section(models.Model):
-    initial_seq = 0
+    # initial_seq = 0
     section_text = models.CharField(max_length=255)
     section_seq = models.IntegerField(default=100)
 
@@ -11,7 +11,7 @@ class Section(models.Model):
 
 
 class Page(models.Model):
-    initial_seq = 0
+    # initial_seq = 0
     page_header = models.TextField(blank=True)
     page_seq = models.IntegerField(default=100)
 
@@ -20,7 +20,7 @@ class Page(models.Model):
 
 
 class SubPage(models.Model):
-    initial_seq = 0
+    # initial_seq = 0
     sub_page_header = models.TextField(blank=True)
     sub_page_seq = models.IntegerField(default=100)
 
@@ -29,7 +29,7 @@ class SubPage(models.Model):
 
 
 class Question(models.Model):
-    initial_seq = 0
+    # initial_seq = 0
     # initialise constants for Question types
     SINGLE_QUESTION_TABLE = 'SingleQuestionTable'
     SINGLE_QUESTION_LIST = 'SingleQuestionList'
@@ -53,7 +53,6 @@ class Question(models.Model):
         (NO, 'N'),
     )
 
-    question_id = models.IntegerField()
     question_seq = models.IntegerField(default=100)
     question_text = models.CharField(max_length=255)
     question_type = models.CharField(max_length=255, choices=QUESTION_TYPE_CHOICES, default=SINGLE_QUESTION_TABLE)
@@ -64,7 +63,7 @@ class Question(models.Model):
 
 
 class Response(models.Model):
-    initial_seq = 0
+    # initial_seq = 0
 
     # initialise yes no constants
     YES = 'Y'
