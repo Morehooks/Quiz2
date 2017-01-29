@@ -89,9 +89,19 @@ class Response(models.Model):
         return self.response_text
 
 
-class Participant(models.model):
+class Participant(models.Model):
+    ONLINE = 'Online'
+    PAPER = 'Paper'
+    NO_PART = 'Not_Participated'
+
+    SURVEY_TYPE_CHOICES = (
+        (ONLINE, 'Online'),
+        (PAPER, 'Paper'),
+        (NO_PART, 'Not Participated')
+    )
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    organisation = models.CharField(max_length=255)
+    organisation = models.CharField(max_length=255, choices=SURVEY_TYPE_CHOICES, default=ONLINE)
     survey_type = models.CharField(max_length=20)
 
     def __str__(self):

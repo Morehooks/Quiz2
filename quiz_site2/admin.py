@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from import_export import resources, fields
 from .models import Section, Page, SubPage, Question, Response, Participant, User
 from import_export.admin import ImportExportActionModelAdmin
@@ -10,7 +10,7 @@ class ParticipantInline(admin.StackedInline):
     model = Participant
 
 
-class UserAdmin(UserAdmin):
+class UserAdmin(BaseUserAdmin):
     inlines = (ParticipantInline,)
 
 
@@ -98,5 +98,5 @@ admin.site.register(Section, SectionIOAdmin)
 admin.site.register(SubPage, SubPageIOAdmin)
 admin.site.register(Question,  QuestionIOAdmin)
 admin.site.register(Response, ResponseIOAdmin)
-admin.site.register(Response, ResponseIOAdmin)
-admin.site.register(User, UserAdmin)
+admin.site.unregister(User)
+admin.site.register(User, BaseUserAdmin)
