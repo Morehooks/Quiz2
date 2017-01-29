@@ -100,7 +100,7 @@ class Participant(models.Model):
         (NO_PART, 'Not Participated')
     )
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     organisation = models.CharField(max_length=255, choices=SURVEY_TYPE_CHOICES, default=ONLINE)
     survey_type = models.CharField(max_length=20)
 
