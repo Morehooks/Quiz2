@@ -1,17 +1,8 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from import_export import resources, fields
 from .models import Section, Page, SubPage, Question, Response, Participant, User
 from import_export.admin import ImportExportActionModelAdmin
 from import_export.widgets import ForeignKeyWidget
-
-
-class ParticipantInline(admin.StackedInline):
-    model = Participant
-
-
-class UserAdmin(BaseUserAdmin):
-    inlines = (ParticipantInline, )
 
 
 """
@@ -65,14 +56,14 @@ class ResponseResource(resources.ModelResource):
         model = Response
 
 
-class UserResource(resources.ModelResource):
-    participant = fields.Field(
-        column_name='participant',
-        attribute='participant',
-        widget=ForeignKeyWidget(Participant, 'id'))
+class ParticipantResource(resources.ModelResource):
+    user = fields.Field(
+        column_name='user',
+        attribute='user',
+        widget=ForeignKeyWidget(User, 'id'))
 
     class Meta:
-        model = User
+        model = Participant
 
 
 """
@@ -100,7 +91,7 @@ class ResponseIOAdmin(ImportExportActionModelAdmin):
     pass
 
 
-class UserIOAdmin(ImportExportActionModelAdmin, UserAdmin):
+class ParticipantIOAdmin(ImportExportActionModelAdmin):
     pass
 
 
@@ -112,5 +103,4 @@ admin.site.register(Section, SectionIOAdmin)
 admin.site.register(SubPage, SubPageIOAdmin)
 admin.site.register(Question,  QuestionIOAdmin)
 admin.site.register(Response, ResponseIOAdmin)
-admin.site.unregister(User)
-admin.site.register(User, UserIOAdmin)
+admin.site.register(Participant, ParticipantIOAdmin)
