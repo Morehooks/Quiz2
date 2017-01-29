@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Section(models.Model):
@@ -86,6 +87,15 @@ class Response(models.Model):
 
     def __str__(self):
         return self.response_text
+
+
+class Participant(models.model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    organisation = models.CharField(max_length=255)
+    survey_type = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.organisation
 
 
 def default_seq_value(quiz_model):

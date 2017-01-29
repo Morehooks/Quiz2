@@ -1,8 +1,17 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from import_export import resources, fields
-from .models import Section, Page, SubPage, Question, Response
+from .models import Section, Page, SubPage, Question, Response, Participant, User
 from import_export.admin import ImportExportActionModelAdmin
 from import_export.widgets import ForeignKeyWidget
+
+
+class ParticipantInline(admin.StackedInline):
+    model = Participant
+
+
+class UserAdmin(UserAdmin):
+    inlines = (ParticipantInline,)
 
 
 """
@@ -89,3 +98,5 @@ admin.site.register(Section, SectionIOAdmin)
 admin.site.register(SubPage, SubPageIOAdmin)
 admin.site.register(Question,  QuestionIOAdmin)
 admin.site.register(Response, ResponseIOAdmin)
+admin.site.register(Response, ResponseIOAdmin)
+admin.site.register(User, UserAdmin)
